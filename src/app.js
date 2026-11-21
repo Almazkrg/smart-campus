@@ -2,12 +2,14 @@
 // Business rules live in availability.js, filtering in filtering.js, texts in messages.js.
 import { checkRoom, checkAllRooms } from './availability.js';
 import { filterRooms, listEquipment } from './filtering.js';
+import { explainAvailability, createMockAdapter, DEFAULT_TIMEOUT_MS } from './explain.js';
 import { ROOMS, FIXED_NOW } from './fixtures.js';
 import { EMPTY_STATE_TEXT, describeResult, describeRoom, timeToIso } from './messages.js';
 
 const hhmm = (iso) => iso.slice(11, 16);
 
-export function mountApp(doc, rooms = ROOMS) {
+// options.explainAdapter: server-side LLM adapter in production; the labelled mock by default.
+export function mountApp(doc, rooms = ROOMS, { explainAdapter = createMockAdapter(), explainTimeoutMs = DEFAULT_TIMEOUT_MS } = {}) {
   const $ = (id) => doc.getElementById(id);
   let checked = false; // has the user pressed "Check availability" for the current inputs?
 
@@ -33,6 +35,43 @@ export function mountApp(doc, rooms = ROOMS) {
     $('result').textContent = '';
     $('result').className = '';
   };
+
+  // Practice #11: optional explanation. It is generated text, shown in its own labelled box, and is
+  // dropped whenever the inputs change so it can never describe a different request than the one shown.
+  let explainToken = 0;
+  const clearExplanation = () => {
+    explainToken += 1; // ignore any answer that is still in flight
+    $('explanation').replaceChildren();
+    $('explanation').className = '';
+  };
+  const showExplanation = (outcome) => {
+    const tag = doc.createElement('span');
+    tag.className = 'tag';
+    tag.textContent = outcome.source === 'ai'
+      ? `AI-generated explanation (${outcome.adapter} mode) - not the booking status`
+      : 'Automatic explanation (AI unavailable) - not the booking status';
+    const body = doc.createElement('span');
+    body.textContent = outcome.explanation; // textContent only: model output is never parsed as HTML
+    $('explanation').replaceChildren(tag, body);
+    $('explanation').className = outcome.source === 'ai' ? 'ai' : 'fallback';
+  };
+
+  async function runExplain() {
+    clearExplanation();
+    const token = explainToken;
+    const room = rooms.find((r) => r.id === selectedRoomId());
+    const start = $('s').value;
+    const end = $('e').value;
+    // The deterministic checker decides; the explainer only receives its result.
+    const result = checkRoom({ start: timeToIso(start), end: timeToIso(end) }, rooms, selectedRoomId(), { now: FIXED_NOW });
+    $('explain').disabled = true;
+    const outcome = await explainAvailability(
+      { roomLabel: room ? room.name : '', start, end, isAvailable: result.available, reasonCode: result.reason },
+      { adapter: explainAdapter, timeoutMs: explainTimeoutMs },
+    );
+    $('explain').disabled = visibleRooms().length === 0;
+    if (token === explainToken) showExplanation(outcome);
+  }
 
   function renderBookings() {
     const room = rooms.find((r) => r.id === selectedRoomId());
@@ -75,6 +114,8 @@ export function mountApp(doc, rooms = ROOMS) {
     $('empty').hidden = !empty;
     select.disabled = empty;
     $('go').disabled = empty;
+    $('explain').disabled = empty;
+    clearExplanation();
     renderBookings();
     if (empty) { clearResult(); renderItems($('all'), []); return; }
     if (checked) runCheck(); else { clearResult(); renderItems($('all'), []); }
@@ -92,6 +133,9 @@ export function mountApp(doc, rooms = ROOMS) {
   });
   $('n').addEventListener('input', refresh);
   $('room').addEventListener('change', refresh);
-  $('go').addEventListener('click', () => { checked = true; runCheck(); });
+  $('go').addEventListener('click', () => { checked = true; runCheck(); clearExplanation(); });
+  $('explain').addEventListener('click', runExplain);
+  $('s').addEventListener('input', clearExplanation);
+  $('e').addEventListener('input', clearExplanation);
   refresh();
 }

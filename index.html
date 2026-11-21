@@ -18,6 +18,11 @@
   fieldset{border:1px solid #ccc;border-radius:6px;margin:12px 0 0;padding:4px 12px 12px}
   label.eq{display:flex;gap:8px;align-items:center;margin:8px 0;font-weight:400}
   label.eq input{width:auto}
+  button#explain{background:#fff;border:2px solid #4a4a8a;color:#2c2c6c;border-radius:6px}
+  #explanation{margin-top:12px;padding:12px;border-radius:6px;border:2px dashed #4a4a8a;background:#f1f1fb;color:#222;font-size:15px}
+  #explanation:empty{display:none}
+  #explanation .tag{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#2c2c6c;margin-bottom:4px}
+  #explanation.fallback{border-color:#8a6d12;background:#fff8e1}
   #all{list-style:none;padding:0}
   #all li{margin:6px 0;padding:8px 12px;border-radius:6px;font-size:14px}
 </style>
@@ -35,6 +40,8 @@
 <label for="e">End</label><input id="e" type="time" value="12:00">
 <button id="go">Check availability</button>
 <div id="result" role="status" aria-live="polite"></div>
+<button id="explain" type="button">Explain availability</button>
+<div id="explanation" role="status" aria-live="polite"></div>
 <h2>Matching rooms for this time</h2>
 <ul id="all" aria-live="polite"></ul>
 <script type="module" src="./src/main.js"></script>
