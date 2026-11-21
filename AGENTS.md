@@ -9,9 +9,10 @@ Smart Campus room availability checker for a **catalog of 5 fictional rooms**. E
 - `src/filtering.js` - pure room filters: F1 capacity >= attendees, F2 ALL required equipment, `listEquipment`.
 - `src/app.js` - UI wiring (`mountApp(document)`); `src/main.js` only calls it.
 - `src/fixtures.js` - fictional demo data (`ROOMS` list, fixed clock, frozen bookings). `ROOM_NAME`/`BOOKINGS` still point to the first room.
+- `src/explain.js` - Practice #11 optional "Explain availability": input/output validation, prompt, labelled MOCK adapter, timeout + deterministic fallback. Pure, no network.
 - `src/messages.js` - reason -> message/CSS class, time -> ISO helper (no DOM).
 - `index.html` - page markup and styles.
-- `tests/` - Vitest tests (`availability.test.js` original, `regression.test.js` added in Practice #09, `multiroom.test.js` and `filtering.test.js` for Assignment #04, `ui.integration.test.js` runs the real page in jsdom, `risk-regression.test.js` added in Practice #10). Risk register: `docs/RISK_REVIEW.md`.
+- `tests/` - Vitest tests (`availability.test.js` original, `regression.test.js` added in Practice #09, `multiroom.test.js` and `filtering.test.js` for Assignment #04, `ui.integration.test.js` runs the real page in jsdom, `risk-regression.test.js` added in Practice #10). `explain*.test.js` added in Practice #11. Report: `docs/PRACTICE11.md`.
 
 ## Constraints
 - Filtering rules: F1 capacity >= attendees; F2 room must have ALL selected equipment; F3 blocked room is never available;
@@ -28,6 +29,12 @@ Smart Campus room availability checker for a **catalog of 5 fictional rooms**. E
 - Fail closed: invalid input, unknown room or unmapped reason must never be shown as "Available".
 - No real personal data, secrets or `.env` files.
 - Keep the existing UI look and message texts; new rooms are added to `ROOMS` only (do not edit A-101 values).
+
+## LLM feature rules (Practice #11)
+- The deterministic checker decides availability; the LLM only explains an already computed result and never changes bookings.
+- Model input = room label, HH:MM start/end, isAvailable, reasonCode only. No personal data; API keys only on a server, never in the browser.
+- Model output is untrusted: validate shape, length (<=280), <=2 sentences, no markup/links, no invented times, agreement with the status (allowlist + denylist); render with `textContent`.
+- Timeout/error/invalid output -> deterministic fallback text. Generated text is always labelled "not the booking status".
 
 ## Engineering rules
 - Prefer pure functions and minimal changes; use at most 2 justified patterns.

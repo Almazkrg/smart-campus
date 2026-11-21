@@ -86,9 +86,22 @@ export function createMockAdapter({ delayMs = 0, fail = false, override } = {}) 
 
 // ---- output validation --------------------------------------------------------------------------
 const sentenceCount = (text) => (text.match(/[^.!?]+[.!?]+(?=\s|$)|[^.!?]+$/g) ?? []).filter((s) => s.trim()).length;
-const NEGATIVE = /\b(unavailable|not available|cannot|can't|isn't|is not|blocked|overlap|already|booked|passed|must|at most)/i;
+// Review fix F1: agreement with the deterministic status is an ALLOWLIST (the text must mention the
+// reason it was given) plus a wide denylist of opposite-polarity wording. A word list alone missed
+// paraphrases such as "You may reserve this room" or "The room is taken".
+const REQUIRED = {
+  OK: /\b(free|available)\b|\bcan be (used|booked)\b/i,
+  INVALID_RANGE: /\b(earlier|before)\b/i,
+  IN_THE_PAST: /\b(passed|past)\b/i,
+  TOO_LONG: /\b120 minutes\b/i,
+  ROOM_BLOCKED: /\bblocked\b/i,
+  OVERLAP: /\b(overlap\w*|booking|booked)\b/i,
+  UNKNOWN_ROOM: /\b(not found|could not be found|unknown)\b/i,
+  INVALID_INPUT: /\b(not valid|invalid)\b/i,
+};
+const NEGATIVE = /\b(unavailable|not (free|available|usable|open)|cannot|can't|isn't|is not|unable|blocked|overlap\w*|already|booked|taken|occupied|reserved|reservation|conflict\w*|closed|passed|must|at most)\b/i;
 // Positive wording that must never accompany an "unavailable" decision ("not available" is allowed).
-const POSITIVE_CLAIM = /\b(free|open|can be (used|booked)|you can (book|use))\b|(?<!not\s)\bavailable\b/i;
+const POSITIVE_CLAIM = /\b(free|open|vacant|unoccupied|bookable|reserve|yours|go ahead|no (conflicts?|overlaps?)|can be (used|booked)|you (can|may) (book|use|reserve))\b|(?<!not\s)\bavailable\b/i;
 
 /**
  * Validates untrusted model output. Returns the clean explanation or an error code.
@@ -112,9 +125,11 @@ export function validateExplanation(raw, input) {
   if ((text.match(/\b\d{1,2}:\d{2}\b/g) ?? []).some((t) => !allowed.has(t.padStart(5, '0')))) {
     return { ok: false, error: 'OUTPUT_INVENTED_TIME' };
   }
-  // Must agree with the deterministic decision.
-  if (input.isAvailable && NEGATIVE.test(text)) return { ok: false, error: 'OUTPUT_CONTRADICTS_STATUS' };
-  if (!input.isAvailable && POSITIVE_CLAIM.test(text)) return { ok: false, error: 'OUTPUT_CONTRADICTS_STATUS' };
+  // Must agree with the deterministic decision (typographic apostrophes normalised first).
+  const plain = text.replace(/[\u2018\u2019]/g, "'");
+  if (!REQUIRED[input.reasonCode]?.test(plain)) return { ok: false, error: 'OUTPUT_CONTRADICTS_STATUS' };
+  if (input.isAvailable && NEGATIVE.test(plain)) return { ok: false, error: 'OUTPUT_CONTRADICTS_STATUS' };
+  if (!input.isAvailable && POSITIVE_CLAIM.test(plain)) return { ok: false, error: 'OUTPUT_CONTRADICTS_STATUS' };
   return { ok: true, explanation: text };
 }
 

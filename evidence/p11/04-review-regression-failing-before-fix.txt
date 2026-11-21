@@ -1,0 +1,17 @@
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: You may reserve this room for that slot.
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: The room is vacant, go ahead and reserve it.
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: No conflicts were found, so it is yours.
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: Room A-101 is unoccupied at 10:30-11:30.
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: It is NOT unavailable.
+ FAIL  tests/explain-review-regression.test.js  rejects for an unavailable decision: The slot is bookable.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: Sorry, the room is taken.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: The room is occupied.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: There is a conflict with another reservation.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: The room isn’t usable.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: Not free at that time.
+ FAIL  tests/explain-review-regression.test.js  rejects for an available decision: It is closed.
+ FAIL  tests/explain-review-regression.test.js  changing the times after a check and pressing Explain refreshes the status too
+ FAIL  tests/explain-review-regression.test.js  Explain without a prior Check also shows the confirmed status
+ Test Files  1 failed | 8 passed (9)
+      Tests  14 failed | 126 passed (140)

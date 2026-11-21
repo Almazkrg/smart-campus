@@ -1,0 +1,10 @@
+UNAVAIL true | You may reserve this room for that slot.
+UNAVAIL true | The room is vacant, go ahead and reserve it.
+UNAVAIL true | No conflicts were found, so it is yours.
+UNAVAIL true | It is NOT unavailable.
+UNAVAIL true | The slot is bookable.
+AVAIL   true | Sorry, the room is taken.
+AVAIL   true | The room is occupied.
+AVAIL   true | The room isn’t usable.
+AVAIL   true | Not free at that time.
+AVAIL   true | It is closed.

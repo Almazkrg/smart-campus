@@ -35,3 +35,6 @@ Full analysis, diagrams, quality table and AI-use record: **`docs/REPORT.md`**.
 ## Practice #10 (risk review)
 See `docs/RISK_REVIEW.md` (risk register, agent-readiness audit, release decision) and `evidence/p10/`.
 Invalid input is fail-closed (`INVALID_INPUT`); no linter / formatter / type checker / CI exists yet.
+
+## Practice #11 (Explain availability)
+Optional "Explain availability" button: a MOCK LLM adapter (`src/explain.js`) explains the deterministic result in <= 2 sentences; the explanation is validated, labelled "not the booking status", and falls back to the rules' own text on timeout/error. 140 tests pass (`npm test`). See `docs/PRACTICE11.md` and `evidence/p11/`.

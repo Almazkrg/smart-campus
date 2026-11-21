@@ -59,6 +59,10 @@ export function mountApp(doc, rooms = ROOMS, { explainAdapter = createMockAdapte
   async function runExplain() {
     clearExplanation();
     const token = explainToken;
+    // Review fix F2: refresh the confirmed status for the CURRENT inputs first, so the status box and
+    // the explanation can never disagree (Explain also works without a prior "Check").
+    checked = true;
+    runCheck();
     const room = rooms.find((r) => r.id === selectedRoomId());
     const start = $('s').value;
     const end = $('e').value;

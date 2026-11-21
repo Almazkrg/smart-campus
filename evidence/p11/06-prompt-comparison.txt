@@ -1,0 +1,15 @@
+
+P1 minimal ("Explain this room result")
+  available REJECT (OUTPUT_TOO_MANY_SENTENCES)  | Great news! Room A-101 is free from 11:00 to 12:00. It is usually quiet at that hour, and the projector works. Enjoy your class!
+  overlap   REJECT (OUTPUT_INVENTED_TIME)  | Room A-101 is booked by another group between 10:00 and 11:00, so you cannot use it then.
+  blocked   PASS  | Lab C-301 is blocked right now because of maintenance work.
+
+P2 constrained (facts only, max 2 sentences)
+  available PASS  | Room A-101 is free from 11:00 to 12:00, so this time slot can be used.
+  overlap   PASS  | Room A-101 already has a booking that overlaps 10:30-11:30.
+  blocked   PASS  | Lab C-301 (maintenance) is currently blocked, so it cannot be requested.
+
+P3 constrained + JSON-only + status fixed + data-not-instructions (SYSTEM_INSTRUCTION in src/explain.js)
+  available PASS  | Room A-101 is free from 11:00 to 12:00, so this time slot can be used.
+  overlap   PASS  | Room A-101 already has a booking that overlaps 10:30-11:30. Please try a different time or room.
+  blocked   PASS  | Lab C-301 (maintenance) is currently blocked, so it cannot be requested at any time.
