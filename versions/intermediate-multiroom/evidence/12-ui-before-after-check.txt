@@ -1,0 +1,55 @@
+{
+ "before-desktop": {
+  "texts": [
+   "11:00-12:00: Available [ok]",
+   "09:30-10:00: Available [ok]",
+   "10:30-11:30: Unavailable: overlaps an existing booking [no]",
+   "08:00-08:30: Unavailable: time is in the past [no]",
+   "12:00-11:00: Unavailable: start must be before end [no]",
+   "15:00-17:01: Unavailable: max 120 minutes [no]",
+   "15:00-16:00 blocked: Unavailable: room is blocked [no]",
+   "15:00-16:00: Available [ok]"
+  ],
+  "errs": []
+ },
+ "before-mobile": {
+  "texts": [
+   "11:00-12:00: Available [ok]",
+   "09:30-10:00: Available [ok]",
+   "10:30-11:30: Unavailable: overlaps an existing booking [no]",
+   "08:00-08:30: Unavailable: time is in the past [no]",
+   "12:00-11:00: Unavailable: start must be before end [no]",
+   "15:00-17:01: Unavailable: max 120 minutes [no]",
+   "15:00-16:00 blocked: Unavailable: room is blocked [no]",
+   "15:00-16:00: Available [ok]"
+  ],
+  "errs": []
+ },
+ "after-desktop": {
+  "texts": [
+   "11:00-12:00: Available [ok]",
+   "09:30-10:00: Available [ok]",
+   "10:30-11:30: Unavailable: overlaps an existing booking [no]",
+   "08:00-08:30: Unavailable: time is in the past [no]",
+   "12:00-11:00: Unavailable: start must be before end [no]",
+   "15:00-17:01: Unavailable: max 120 minutes [no]",
+   "15:00-16:00 blocked: Unavailable: room is blocked [no]",
+   "15:00-16:00: Available [ok]"
+  ],
+  "errs": []
+ },
+ "after-mobile": {
+  "texts": [
+   "11:00-12:00: Available [ok]",
+   "09:30-10:00: Available [ok]",
+   "10:30-11:30: Unavailable: overlaps an existing booking [no]",
+   "08:00-08:30: Unavailable: time is in the past [no]",
+   "12:00-11:00: Unavailable: start must be before end [no]",
+   "15:00-17:01: Unavailable: max 120 minutes [no]",
+   "15:00-16:00 blocked: Unavailable: room is blocked [no]",
+   "15:00-16:00: Available [ok]"
+  ],
+  "errs": []
+ }
+}
+BEHAVIOUR IDENTICAL BEFORE/AFTER: true

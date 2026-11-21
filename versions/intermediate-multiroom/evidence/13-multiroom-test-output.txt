@@ -1,0 +1,18 @@
+$ npm test   (AFTER multi-room change)
+
+
+> smart-campus-availability@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /home/claude/sc/smart-campus
+
+ ✓ tests/regression.test.js (19 tests) 10ms
+ ✓ tests/multiroom.test.js (16 tests) 7ms
+ ✓ tests/availability.test.js (12 tests) 5ms
+
+ Test Files  3 passed (3)
+      Tests  47 passed (47)
+   Start at  08:18:43
+   Duration  903ms (transform 81ms, setup 0ms, collect 88ms, tests 22ms, environment 1ms, prepare 240ms)
+

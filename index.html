@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Campus - Room availability</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px;}
+  label{display:block;margin:12px 0 4px;font-weight:600}
+  input,select,button{width:100%;padding:10px;font-size:16px;box-sizing:border-box}
+  button{margin-top:16px;cursor:pointer}
+  button:disabled{cursor:not-allowed}
+  #result{margin-top:16px;padding:12px;border-radius:6px;font-weight:600}
+  #result:empty{display:none}
+  #empty{margin-top:12px;padding:12px;border-radius:6px;background:#fff3cd;color:#664d03;font-weight:600}
+  .ok{background:#d9f7e3;color:#0b5d2a}.no{background:#fde0e0;color:#8a1212}
+  ul{padding-left:18px;color:#444}
+  fieldset{border:1px solid #ccc;border-radius:6px;margin:12px 0 0;padding:4px 12px 12px}
+  label.eq{display:flex;gap:8px;align-items:center;margin:8px 0;font-weight:400}
+  label.eq input{width:auto}
+  #all{list-style:none;padding:0}
+  #all li{margin:6px 0;padding:8px 12px;border-radius:6px;font-size:14px}
+</style>
+</head>
+<body>
+<h1>Campus rooms</h1>
+<p>Fixed clock: 2026-10-27 09:00. Bookings are fictional.</p>
+<label for="n">Attendees</label><input id="n" type="number" min="1" inputmode="numeric" placeholder="e.g. 25">
+<fieldset><legend>Required equipment</legend><div id="equipment"></div></fieldset>
+<div id="empty" role="status" aria-live="polite" hidden></div>
+<label for="room">Room</label><select id="room"></select>
+<p>Existing bookings for this room:</p>
+<ul id="bookings"></ul>
+<label for="s">Start</label><input id="s" type="time" value="11:00">
+<label for="e">End</label><input id="e" type="time" value="12:00">
+<button id="go">Check availability</button>
+<div id="result" role="status" aria-live="polite"></div>
+<h2>Matching rooms for this time</h2>
+<ul id="all" aria-live="polite"></ul>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

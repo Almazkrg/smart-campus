@@ -1,0 +1,19 @@
+
+> smart-campus-availability@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /home/claude/proj/smart-campus
+
+ ✓ tests/ui.integration.test.js (11 tests) 96ms
+ ✓ tests/risk-regression.test.js (12 tests) 28ms
+ ✓ tests/regression.test.js (19 tests) 9ms
+ ✓ tests/multiroom.test.js (17 tests) 6ms
+ ✓ tests/filtering.test.js (11 tests) 6ms
+ ✓ tests/availability.test.js (12 tests) 4ms
+
+ Test Files  6 passed (6)
+      Tests  82 passed (82)
+   Start at  12:28:10
+   Duration  2.01s (transform 101ms, setup 0ms, collect 153ms, tests 150ms, environment 703ms, prepare 279ms)
+

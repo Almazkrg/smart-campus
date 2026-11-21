@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Campus - Room availability</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px;}
+  label{display:block;margin:12px 0 4px;font-weight:600}
+  input,button{width:100%;padding:10px;font-size:16px;box-sizing:border-box}
+  button{margin-top:16px;cursor:pointer}
+  #result{margin-top:16px;padding:12px;border-radius:6px;font-weight:600}
+  .ok{background:#d9f7e3;color:#0b5d2a}.no{background:#fde0e0;color:#8a1212}
+  ul{padding-left:18px;color:#444}
+  select{width:100%;padding:10px;font-size:16px;box-sizing:border-box}
+  #all{list-style:none;padding:0}
+  #all li{margin:6px 0;padding:8px 12px;border-radius:6px;font-size:14px}
+</style>
+</head>
+<body>
+<h1>Campus rooms</h1>
+<p>Fixed clock: 2026-10-27 09:00. Bookings are fictional.</p>
+<label for="room">Room</label><select id="room"></select>
+<p>Existing bookings for this room:</p>
+<ul id="bookings"></ul>
+<label for="s">Start</label><input id="s" type="time" value="11:00">
+<label for="e">End</label><input id="e" type="time" value="12:00">
+<button id="go">Check availability</button>
+<div id="result" role="status" aria-live="polite"></div>
+<h2>All rooms for this time</h2>
+<ul id="all" aria-live="polite"></ul>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

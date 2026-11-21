@@ -1,0 +1,12 @@
+$ npm test   (AFTER refactoring)
+
+ RUN  v2.1.9 /tmp/claude-0/-home-claude/557f80cb-f8bc-5adc-ab0e-eab7bac9c18d/scratchpad/out/smart-campus
+
+ ✓ tests/regression.test.js (19 tests) 8ms
+ ✓ tests/availability.test.js (12 tests) 6ms
+
+ Test Files  2 passed (2)
+      Tests  31 passed (31)
+   Start at  23:05:17
+   Duration  455ms (transform 42ms, setup 0ms, collect 57ms, tests 14ms, environment 0ms, prepare 107ms)
+
