@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Campus - Practice 12 (code-based)</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px}
+  label{display:block;margin:12px 0 4px;font-weight:600}
+  input,select,button{width:100%;padding:10px;font-size:16px;box-sizing:border-box}
+  button{margin-top:16px;cursor:pointer}
+  #result{margin-top:16px;padding:12px;border-radius:6px;font-weight:600}
+  #result:empty{display:none}
+  .ok{background:#d9f7e3;color:#0b5d2a}.no{background:#fde0e0;color:#8a1212}.invalid{background:#fff3cd;color:#664d03}
+  ul{padding-left:18px;color:#444}
+</style>
+</head>
+<body>
+<h1>Room A-101 (code-based)</h1>
+<p>Fixed clock: 2026-10-27 09:00. Bookings are fictional.</p>
+<p>Existing bookings:</p><ul id="bookings"></ul>
+<label for="start">Start time</label><input id="start" type="time" value="11:00">
+<label for="duration">Duration (minutes)</label><input id="duration" type="number" inputmode="numeric" value="60">
+<label for="status">Room status</label>
+<select id="status"><option value="available">Available</option><option value="blocked">Blocked</option></select>
+<button id="go">Check availability</button>
+<div id="result" role="status" aria-live="polite"></div>
+<script type="module" src="./src/practice12-main.js"></script>
+</body>
+</html>
